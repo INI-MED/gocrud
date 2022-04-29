@@ -5,9 +5,9 @@ import (
 	"log"
 	"os"
 
-	"github.com/joho/godotenv"
 	"github.com/INI-MED/gocrud/api/controllers"
 	"github.com/INI-MED/gocrud/api/seed"
+	"github.com/joho/godotenv"
 )
 
 var server = controllers.Server{}
@@ -22,11 +22,16 @@ func Run() {
 		fmt.Println("We are getting the env values")
 	}
 
-	server.Initialize(os.Getenv("DB_DRIVER"), os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PORT"), os.Getenv("DB_HOST"), os.Getenv("DB_NAME"))
+	server.Initialize(
+		os.Getenv("DB_DRIVER"),
+		os.Getenv("POSTGRES_USER"),
+		os.Getenv("POSTGRES_PASSWORD"),
+		os.Getenv("DB_PORT"),
+		os.Getenv("DB_HOST"),
+		os.Getenv("POSTGRES_DB"),
+	)
 
 	seed.Load(server.DB)
 
 	server.Run(":8080")
-
 }
-
